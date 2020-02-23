@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Toggle from './Toggle';
 
 const App = () => {
-	const [name, setName] = useState('');
-
-	useEffect(() => {
-		document.title = name;
-	});
+	const [name, setName] = useTitleInput('');
 
 	return (
 		<div className='main-wrapper'>
@@ -23,5 +19,16 @@ const App = () => {
 		</div>
 	);
 };
+
+// Custom Hook
+function useTitleInput(initialValue) {
+	const [value, setValue] = useState(initialValue);
+
+	useEffect(() => {
+		document.title = value;
+	});
+
+	return [value, setValue];
+}
 
 export default App;
