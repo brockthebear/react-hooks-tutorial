@@ -5,25 +5,25 @@ import { useTitleInput } from './hooks/useTitleInput';
 const api = 'https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes';
 const title = 'Level Up Dishes';
 
-// useState allows us to set the state of the data
-// useEffect is essentially our lifecycle method
-
 const App = () => {
 	const [name, setName] = useTitleInput('');
 	const appRef = useRef();
 	const [dishes, setDishes] = useState([]);
 
 	const fetchDishes = async () => {
-		console.log(`fetch dishes!`);
+		console.log(`fetched dishes!`);
 		const res = await fetch(api);
 		const data = await res.json();
 		setDishes(data);
 	};
 
-	// !! WARNING: calling fetchDishes in useEffect() like this will cause fetchDishes() to be called with every single render and update.
+	/**
+	 * * Set 2nd param as empty array to run useEffect only once on mount.
+	 * * Like this, useEffect() basically becomes a `componentDidMount()`
+	 */
 	useEffect(() => {
-		// fetchDishes();
-	});
+		fetchDishes();
+	}, []);
 
 	return (
 		<div className='main-wrapper' ref={appRef}>
