@@ -1,27 +1,29 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Toggle from './Toggle';
 import { useTitleInput } from './hooks/useTitleInput';
+
+const api = 'https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes';
+const title = 'Level Up Dishes';
+
+// useState allows us to set the state of the data
+// useEffect is essentially our lifecycle method
 
 const App = () => {
 	const [name, setName] = useTitleInput('');
 	const appRef = useRef();
-	const title = 'Level Up Dishes';
+	const [dishes, setDishes] = useState([]);
 
-	const reverseWord = word => {
-		console.log(`reverse ${word === title ? 'title' : 'word'}`);
-		return word
-			.split('')
-			.reverse()
-			.join('');
+	const fetchDishes = async () => {
+		console.log(`fetch dishes!`);
+		const res = await fetch(api);
+		const data = await res.json();
+		setDishes(data);
 	};
 
-	// useMemo caches the `title` value and checks its value.
-	// if it has not changed, the `reverseWord()` function is not run.
-	//
-	// useMemo is best used when you have expensive functions that you only want to run under specific circumstances.
-	// very similar to shouldComponentUpdate().
-	useMemo(() => reverseWord(name), [name]);
-	const TitleReversed = useMemo(() => reverseWord(title), [title]);
+	// !! WARNING: calling fetchDishes in useEffect() like this will cause fetchDishes() to be called with every single render and update.
+	useEffect(() => {
+		// fetchDishes();
+	});
 
 	return (
 		<div className='main-wrapper' ref={appRef}>
@@ -30,7 +32,7 @@ const App = () => {
 					appRef.current.classList.add('new-fake-class');
 				}}
 			>
-				{TitleReversed}
+				{title}
 			</h1>
 			<Toggle />
 			<form
@@ -41,6 +43,18 @@ const App = () => {
 				<input type='text' onChange={e => setName(e.target.value)} value={name} />
 				<button>Submit</button>
 			</form>
+
+			{dishes.map(dish => (
+				<article className='dish-card dish-card--withImage'>
+					<h3>{dish.name}</h3>
+					<p>{dish.desc}</p>
+					<div className='ingredients'>
+						{dish.ingredients.map(ingredient => (
+							<span>{ingredient}</span>
+						))}
+					</div>
+				</article>
+			))}
 		</div>
 	);
 };
