@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Toggle from './Toggle';
 import { useTitleInput } from './hooks/useTitleInput';
 
 const App = () => {
 	const [name, setName] = useTitleInput('');
+	const appRef = useRef();
 
 	return (
-		<div className='main-wrapper'>
-			<h1>Level Up Dishes</h1>
+		<div className='main-wrapper' ref={appRef}>
+			<h1
+				onClick={() => {
+					appRef.current.classList.add('new-fake-class');
+				}}
+			>
+				Level Up Dishes
+			</h1>
 			<Toggle />
 			<form
 				onSubmit={e => {
