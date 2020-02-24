@@ -1,3 +1,9 @@
+## React Hooks Tutorial
+
+Adapted from [React Hooks for Everyone](https://www.leveluptutorials.com/tutorials/react-hooks-for-everyone).
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
