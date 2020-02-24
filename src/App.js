@@ -12,7 +12,6 @@ const App = () => {
 	const [dishes, setDishes] = useState([]);
 
 	const fetchDishes = async () => {
-		console.log(`fetched dishes!`);
 		const res = await fetch(api);
 		const data = await res.json();
 		setDishes(data);
@@ -26,7 +25,7 @@ const App = () => {
 	 */
 	useEffect(() => {
 		fetchDishes();
-	}, [name]);
+	}, []);
 
 	return (
 		<div className='main-wrapper' ref={appRef}>
