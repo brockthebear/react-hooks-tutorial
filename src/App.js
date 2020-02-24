@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
+import useAbortableFetch from 'use-abortable-fetch';
 import Toggle from './Toggle';
 import { useTitleInput } from './hooks/useTitleInput';
 
@@ -9,23 +10,11 @@ const App = () => {
 	const appRef = useRef();
 	const [name, setName] = useTitleInput('');
 
-	const [dishes, setDishes] = useState([]);
+	const { data, loading, error, abort } = useAbortableFetch(api);
 
-	const fetchDishes = async () => {
-		const res = await fetch(api);
-		const data = await res.json();
-		setDishes(data);
-	};
-
-	/**
-	 * @param function() A function to be called after every render (by default).
-	 * @param array[] An array of values to watch.
-	 * 								When one of these values changes, useEffect will be run.
-	 * 								An empty array will make useEffect run only on mount and unmount.
-	 */
-	useEffect(() => {
-		fetchDishes();
-	}, []);
+	if (loading) return <div>Loading...</div>;
+	if (error) return <div>Error: {error.message}</div>;
+	if (!data) return null;
 
 	return (
 		<div className='main-wrapper' ref={appRef}>
@@ -46,7 +35,7 @@ const App = () => {
 				<button>Submit</button>
 			</form>
 
-			{dishes.map(dish => (
+			{data.map(dish => (
 				<article className='dish-card dish-card--withImage'>
 					<h3>{dish.name}</h3>
 					<p>{dish.desc}</p>
