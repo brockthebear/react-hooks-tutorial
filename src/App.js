@@ -6,8 +6,9 @@ const api = 'https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes';
 const title = 'Level Up Dishes';
 
 const App = () => {
-	const [name, setName] = useTitleInput('');
 	const appRef = useRef();
+	const [name, setName] = useTitleInput('');
+
 	const [dishes, setDishes] = useState([]);
 
 	const fetchDishes = async () => {
@@ -18,12 +19,14 @@ const App = () => {
 	};
 
 	/**
-	 * * Set 2nd param as empty array to run useEffect only once on mount.
-	 * * Like this, useEffect() basically becomes a `componentDidMount()`
+	 * @param function() A function to be called after every render (by default).
+	 * @param array[] An array of values to watch.
+	 * 								When one of these values changes, useEffect will be run.
+	 * 								An empty array will make useEffect run only on mount and unmount.
 	 */
 	useEffect(() => {
 		fetchDishes();
-	}, []);
+	}, [name]);
 
 	return (
 		<div className='main-wrapper' ref={appRef}>
