@@ -2,6 +2,15 @@
 
 Adapted from [React Hooks for Everyone](https://www.leveluptutorials.com/tutorials/react-hooks-for-everyone).
 
+### Resources
+
+- [Hooks Intro](https://reactjs.org/docs/hooks-intro.html)
+- [Awesome React Hooks](https://github.com/rehooks/awesome-react-hooks)
+- [useHooks](https://usehooks.com/)
+- [Beautiful React Hooks](https://beautifulinteractions.github.io/beautiful-react-hooks/)
+- [Captain Hook](https://github.com/stevenpersia/captain-hook)
+- [Hooks](https://github.com/umijs/hooks/)
+
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
